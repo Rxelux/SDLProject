@@ -1,9 +1,8 @@
 
 #include "header.h"
-#include "renderer/renderer.h"
-#include "gameObject/gameObject.h"
+#include "gameObject/player.h"
 
-void DrawGame(SDL_Renderer** renderer,SDL_Rect* rect);
+void DrawGame(SDL_Renderer** renderer);
 
 int main( int argc, char* args[] )
 {
@@ -29,10 +28,7 @@ int main( int argc, char* args[] )
 
 	// Initialize le player
 	G_gameObject player;
-	InitPlayer(&player);
-
-	SDL_Rect playerRect;
-
+	InitPlayer(&player,&renderer);
 
 	// init tileMap
 	//T_map map;
@@ -43,35 +39,24 @@ int main( int argc, char* args[] )
 		//la on lance toute les fonction update de tout les gameobject du jeu
 		UpdateEvents(&input);
 		UpdatePlayer(&player,&input);
-		playerRect.x = player.transform.position.x;
-		playerRect.y = player.transform.position.y;
-		playerRect.w = player.transform.scale.x;
-		playerRect.h = player.transform.scale.y;
 
 		//ENDTODO
 
-		DrawGame(&renderer,&playerRect);
+		DrawGame(&renderer);
+		RenderGameObject(&renderer,&player);
+		// Render the changes above
+		SDL_RenderPresent(renderer);
 
 		// Add a 16msec delay to make our game run at ~60 fps
 		SDL_Delay( 16 );
 	}
 }
 
-void DrawGame(SDL_Renderer** renderer,SDL_Rect* rect)
+void DrawGame(SDL_Renderer** renderer)
 {
 	// Change color orange
 	SDL_SetRenderDrawColor( *renderer, 255, 200, 0, 255 );
 
 	// Clear the window and make it all orange
 	SDL_RenderClear( *renderer );
-
-	// Change color to blue
-	SDL_SetRenderDrawColor( *renderer, 0, 0, 255, 255 );
-
-	// Render our "player"
-	SDL_RenderFillRect( *renderer, rect );
-
-	// Render the changes above
-	SDL_RenderPresent( *renderer);
-
 }

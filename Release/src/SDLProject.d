@@ -1,14 +1,17 @@
 src/SDLProject.o: ../src/SDLProject.c ../src/header.h \
-  ../src/renderer/renderer.h ../src/renderer/../gameObject/gameObject.h \
-  ../src/renderer/../gameObject/../physics/physics.h \
-  ../src/renderer/../gameObject/../events/events.h
+  ../src/gameObject/player.h ../src/gameObject/gameObject.h \
+  ../src/gameObject/../physics/physics.h \
+  ../src/gameObject/../events/events.h \
+  ../src/gameObject/../renderer/renderer.h
 
 ../src/header.h:
 
-../src/renderer/renderer.h:
+../src/gameObject/player.h:
 
-../src/renderer/../gameObject/gameObject.h:
+../src/gameObject/gameObject.h:
 
-../src/renderer/../gameObject/../physics/physics.h:
+../src/gameObject/../physics/physics.h:
 
-../src/renderer/../gameObject/../events/events.h:
+../src/gameObject/../events/events.h:
+
+../src/gameObject/../renderer/renderer.h:

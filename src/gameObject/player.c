@@ -1,12 +1,13 @@
-#include "gameObject.h"
+#include "player.h"
 
-void InitPlayer(G_gameObject* player){
+void InitPlayer(G_gameObject* player,SDL_Renderer** renderer){
 
 	strcpy(player->name,"player");
-	InitT(&player->transform,0,0,20,20);
+	InitT(&player->transform,0,0,32,32);
 	ToCenterSpaceV(&player->transform.position.x,&player->transform.position.y);
 	InitB(&player->body,0,0,0,0,10,0.5,0.5);
-
+	player->sprite = LoadTexture(renderer,"src/resources/Sprite.png");
+	printf("%f; %f \n",player->transform.scale.x,player->transform.scale.y);
 }
 
 void UpdatePlayer(G_gameObject* player, E_input* input){
