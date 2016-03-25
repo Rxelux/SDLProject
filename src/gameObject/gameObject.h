@@ -10,15 +10,15 @@
 
 #include "../header.h"
 #include "../physics/physics.h"
-
-
+#include "../sprite/sprite.h"
 
 //----GAMEOBJECT--------------------------------------------
 typedef struct{
 	char name[10];
 	P_transform transform;
 	P_body body;
-	SDL_Texture* sprite;
+	S_sprite sprite;
+	int active;
 }G_gameObject;
 
 #endif /* GAMEOBJECT_GAMEOBJECT_H_ */

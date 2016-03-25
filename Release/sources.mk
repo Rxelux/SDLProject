@@ -15,7 +15,8 @@ C_DEPS :=
 SUBDIRS := \
 src \
 src/events \
-src/gameObject \
+src/gameEngine \
+src/gameObjects \
 src/physics \
 src/renderer \
 

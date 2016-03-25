@@ -20,8 +20,9 @@
 #include <SDL2_ttf/SDL_ttf.h>
 #include <SDL2_mixer/SDL_mixer.h>
 
-
 #define SCREEN_WIDTH 512
 #define SCREEN_HEIGHT 512
+
+#define MAX_OBJECTS 32
 
 #endif /* HEADER_H_ */

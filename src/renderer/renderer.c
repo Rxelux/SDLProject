@@ -27,23 +27,28 @@ SDL_Texture* LoadTexture(SDL_Renderer** renderer, char* path)
     return newTexture;
 }
 
-void RenderGameObject(SDL_Renderer** renderer, G_gameObject* go){
+void RenderGameObjects(SDL_Renderer** renderer,G_gameObject gos[MAX_OBJECTS]){
 
-	if (go->transform.position.x <= (SCREEN_WIDTH-go->transform.scale.x) && go->transform.position.x >= 0){
+	int i;
+	for(i=0;i<MAX_OBJECTS;i++){
 
-		if (go->transform.position.y <= (SCREEN_HEIGHT-go->transform.scale.y) && go->transform.position.y >= 0){
+		if (gos[i].transform.position.x <= (SCREEN_WIDTH-gos[i].transform.scale.x) && gos[i].transform.position.x >= 0){
 
-			SDL_Rect goRect;
+			if (gos[i].transform.position.y <= (SCREEN_HEIGHT-gos[i].transform.scale.y) && gos[i].transform.position.y >= 0){
 
-			goRect.x = go->transform.position.x;
-			goRect.y = go->transform.position.y;
-			goRect.w = go->transform.scale.x;
-			goRect.h = go->transform.scale.y;
+				SDL_Rect goRect;
 
-			//DEBUG
-			//printf("%d; %d | %d; %d \n",goRect.x,goRect.y,goRect.w,goRect.h);
+				goRect.x = gos[i].transform.position.x;
+				goRect.y = gos[i].transform.position.y;
+				goRect.w = gos[i].transform.scale.x;
+				goRect.h = gos[i].transform.scale.y;
 
-			SDL_RenderCopy(*renderer, go->sprite, NULL,&goRect);
+				//DEBUG
+				//printf("%d; %d | %d; %d \n",goRect.x,goRect.y,goRect.w,goRect.h);
+
+				SDL_RenderCopy(*renderer, gos[i].sprite.texture, NULL,&goRect);
+			}
 		}
+
 	}
 }

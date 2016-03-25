@@ -1,51 +1,50 @@
 
 #include "header.h"
-#include "gameObject/player.h"
+#include "gameEngine/gameEngine.h"
+#include "gameObjects/gameObjects.h"
 
 void DrawGame(SDL_Renderer** renderer);
 
 int main( int argc, char* args[] )
 {
-	//init toute les lib de SDL2
+	//init toute les lib de SDL2 [renderer/initialize]
 	if ( !InitAllSDL() )
 		return 0;
 
-	SDL_Window* window;
-	//changer ca avec des define
+	G_gameEngine ge;
 
-
-	if ( !CreateWindow(&window,0,0,SCREEN_WIDTH,SCREEN_HEIGHT) )
-		return 0;
-	SDL_Renderer* renderer;
-	if ( !CreateRenderer(&window,&renderer) )
+	//crée la fenetre du jeu [renderer/initialize]
+	if ( !CreateWindow(&ge.window,0,0,SCREEN_WIDTH,SCREEN_HEIGHT) )
 		return 0;
 
-	SetupRenderer(&renderer,SCREEN_WIDTH,SCREEN_HEIGHT);
+	//crée le renderer associé a la fenetre [renderer/initialize]
+	if ( !CreateRenderer(&ge.window,&ge.renderer) )
+		return 0;
+	//met le renderer a la taille de la fenetre
+	SetupRenderer(&ge.renderer,SCREEN_WIDTH,SCREEN_HEIGHT);
 
-	//
-	E_input input;
-	InitEvents(&input);
+	//init le tableau pour les inputs (voir events) [events/input]
+	InitEvents(&ge.input);
 
-	// Initialize le player
-	G_gameObject player;
-	InitPlayer(&player,&renderer);
+	// Init le player
+	InitPlayer(&ge);
 
 	// init tileMap
 	//T_map map;
 	//initMap(&map);
 
-	while(!input.key[SDLK_ESCAPE] && !input.quit)
+	while(!ge.input.key[SDLK_ESCAPE] && !ge.input.quit)
 	{
 		//la on lance toute les fonction update de tout les gameobject du jeu
-		UpdateEvents(&input);
-		UpdatePlayer(&player,&input);
+		UpdateEvents(&ge.input);
+		UpdatePlayer(&ge);
 
 		//ENDTODO
 
-		DrawGame(&renderer);
-		RenderGameObject(&renderer,&player);
+		DrawGame(&ge.renderer);
+		RenderGameObjects(&ge.renderer,ge.gameObjects);
 		// Render the changes above
-		SDL_RenderPresent(renderer);
+		SDL_RenderPresent(ge.renderer);
 
 		// Add a 16msec delay to make our game run at ~60 fps
 		SDL_Delay( 16 );

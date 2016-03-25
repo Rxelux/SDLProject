@@ -10,7 +10,8 @@ RM := rm -rf
 -include sources.mk
 -include src/renderer/subdir.mk
 -include src/physics/subdir.mk
--include src/gameObject/subdir.mk
+-include src/gameObjects/subdir.mk
+-include src/gameEngine/subdir.mk
 -include src/events/subdir.mk
 -include src/subdir.mk
 -include subdir.mk

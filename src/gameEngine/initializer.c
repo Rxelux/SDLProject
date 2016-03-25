@@ -1,4 +1,4 @@
-#include "renderer.h"
+#include "initializer.h"
 
 int InitAllSDL()
 {

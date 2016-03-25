@@ -4,17 +4,17 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../src/renderer/renderer.c 
+../src/gameEngine/initializer.c 
 
 OBJS += \
-./src/renderer/renderer.o 
+./src/gameEngine/initializer.o 
 
 C_DEPS += \
-./src/renderer/renderer.d 
+./src/gameEngine/initializer.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
-src/renderer/%.o: ../src/renderer/%.c
+src/gameEngine/%.o: ../src/gameEngine/%.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: GCC C Compiler'
 	gcc -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
