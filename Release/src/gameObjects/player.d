@@ -1,31 +1,22 @@
 src/gameObjects/player.o: ../src/gameObjects/player.c \
-  ../src/gameObjects/gameObjects.h \
-  ../src/gameObjects/../gameEngine/gameEngine.h \
-  ../src/gameObjects/../gameEngine/../gameObject/gameObject.h \
-  ../src/gameObjects/../gameEngine/../gameObject/../header.h \
-  ../src/gameObjects/../gameEngine/../gameObject/../physics/physics.h \
-  ../src/gameObjects/../gameEngine/../gameObject/../sprite/sprite.h \
-  ../src/gameObjects/../gameEngine/../events/events.h \
-  ../src/gameObjects/../gameEngine/initializer.h \
-  ../src/gameObjects/../renderer/renderer.h \
-  ../src/gameObjects/../renderer/../gameObjects/gameObjects.h
+  ../src/gameObjects/gameObjectsFonct.h \
+  ../src/gameObjects/gameObjectsStruct.h \
+  ../src/gameObjects/../physics/physics.h \
+  ../src/gameObjects/../physics/../header.h \
+  ../src/gameObjects/../sprite/sprite.h \
+  ../src/gameObjects/../scenes/scenesStruct.h \
+  ../src/gameObjects/../scenes/../events/events.h
 
-../src/gameObjects/gameObjects.h:
+../src/gameObjects/gameObjectsFonct.h:
 
-../src/gameObjects/../gameEngine/gameEngine.h:
+../src/gameObjects/gameObjectsStruct.h:
 
-../src/gameObjects/../gameEngine/../gameObject/gameObject.h:
+../src/gameObjects/../physics/physics.h:
 
-../src/gameObjects/../gameEngine/../gameObject/../header.h:
+../src/gameObjects/../physics/../header.h:
 
-../src/gameObjects/../gameEngine/../gameObject/../physics/physics.h:
+../src/gameObjects/../sprite/sprite.h:
 
-../src/gameObjects/../gameEngine/../gameObject/../sprite/sprite.h:
+../src/gameObjects/../scenes/scenesStruct.h:
 
-../src/gameObjects/../gameEngine/../events/events.h:
-
-../src/gameObjects/../gameEngine/initializer.h:
-
-../src/gameObjects/../renderer/renderer.h:
-
-../src/gameObjects/../renderer/../gameObjects/gameObjects.h:
+../src/gameObjects/../scenes/../events/events.h:

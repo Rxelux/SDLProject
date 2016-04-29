@@ -3,6 +3,7 @@
 void InitEvents(E_input* in){
 
 	memset(in,0,sizeof(*in));
+	in->mousexwheel = in->mouseywheel = 1;
 }
 
 void UpdateEvents(E_input* in)
@@ -32,6 +33,12 @@ void UpdateEvents(E_input* in)
 			break;
 		case SDL_QUIT:
 			in->quit = 1;
+			break;
+		case SDL_MOUSEWHEEL:
+			in->mousexwheel += (float)event.wheel.x/100;
+			in->mousexwheel =roundf(in->mousexwheel * 100) / 100;
+			in->mouseywheel += (float)event.wheel.y/100;
+			in->mouseywheel = roundf(in->mouseywheel * 100) / 100;
 			break;
 		default:
 			break;

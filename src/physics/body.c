@@ -21,6 +21,8 @@ void AddForceB(P_body* b,P_vector* f){
 void ApplyForceB(P_body* b){
 	AddV(&b->velocity,&b->acceleration);
 	MulV(&b->acceleration,0);
+
+	//printf("%f;%f \n",b->acceleration.x,b->acceleration.y);
 }
 
 void AddFrictionB(P_body* b){
@@ -28,7 +30,9 @@ void AddFrictionB(P_body* b){
 	P_vector f;
 	EquV(&f,&b->velocity);
 	MulV(&f,(float)-1);
-	NormalizeV(&f);
+	/*if(MagnitudeV(&f)>1){
+		NormalizeV(&f);
+	}*/
 	MulV(&f,b->coefFriction);
 	AddV(&b->acceleration,&f);
 

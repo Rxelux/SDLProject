@@ -6,16 +6,19 @@
 C_SRCS += \
 ../src/physics/Transform.c \
 ../src/physics/body.c \
+../src/physics/hitBox.c \
 ../src/physics/vector.c 
 
 OBJS += \
 ./src/physics/Transform.o \
 ./src/physics/body.o \
+./src/physics/hitBox.o \
 ./src/physics/vector.o 
 
 C_DEPS += \
 ./src/physics/Transform.d \
 ./src/physics/body.d \
+./src/physics/hitBox.d \
 ./src/physics/vector.d 
 
 

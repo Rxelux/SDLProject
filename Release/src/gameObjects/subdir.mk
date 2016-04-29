@@ -4,13 +4,19 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../src/gameObjects/player.c 
+../src/gameObjects/camera.c \
+../src/gameObjects/player.c \
+../src/gameObjects/tileMap.c 
 
 OBJS += \
-./src/gameObjects/player.o 
+./src/gameObjects/camera.o \
+./src/gameObjects/player.o \
+./src/gameObjects/tileMap.o 
 
 C_DEPS += \
-./src/gameObjects/player.d 
+./src/gameObjects/camera.d \
+./src/gameObjects/player.d \
+./src/gameObjects/tileMap.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

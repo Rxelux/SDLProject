@@ -14,9 +14,10 @@ C_DEPS :=
 # Every subdirectory with source files must be described here
 SUBDIRS := \
 src \
+src/SDLSetup \
 src/events \
-src/gameEngine \
 src/gameObjects \
 src/physics \
-src/renderer \
+src/scenes \
+src/sprite \
 

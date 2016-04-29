@@ -1,29 +1,23 @@
 src/SDLProject.o: ../src/SDLProject.c ../src/header.h \
-  ../src/gameEngine/gameEngine.h \
-  ../src/gameEngine/../gameObject/gameObject.h \
-  ../src/gameEngine/../gameObject/../physics/physics.h \
-  ../src/gameEngine/../gameObject/../sprite/sprite.h \
-  ../src/gameEngine/../events/events.h ../src/gameEngine/initializer.h \
-  ../src/gameObjects/gameObjects.h \
-  ../src/gameObjects/../renderer/renderer.h \
-  ../src/gameObjects/../renderer/../gameObjects/gameObjects.h
+  ../src/scenes/scenesFonct.h ../src/scenes/scenesStruct.h \
+  ../src/scenes/../events/events.h \
+  ../src/scenes/../gameObjects/gameObjectsStruct.h \
+  ../src/scenes/../gameObjects/../physics/physics.h \
+  ../src/scenes/../gameObjects/../sprite/sprite.h \
+  ../src/SDLSetup/SDLSetup.h
 
 ../src/header.h:
 
-../src/gameEngine/gameEngine.h:
+../src/scenes/scenesFonct.h:
 
-../src/gameEngine/../gameObject/gameObject.h:
+../src/scenes/scenesStruct.h:
 
-../src/gameEngine/../gameObject/../physics/physics.h:
+../src/scenes/../events/events.h:
 
-../src/gameEngine/../gameObject/../sprite/sprite.h:
+../src/scenes/../gameObjects/gameObjectsStruct.h:
 
-../src/gameEngine/../events/events.h:
+../src/scenes/../gameObjects/../physics/physics.h:
 
-../src/gameEngine/initializer.h:
+../src/scenes/../gameObjects/../sprite/sprite.h:
 
-../src/gameObjects/gameObjects.h:
-
-../src/gameObjects/../renderer/renderer.h:
-
-../src/gameObjects/../renderer/../gameObjects/gameObjects.h:
+../src/SDLSetup/SDLSetup.h:

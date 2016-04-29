@@ -16,6 +16,7 @@ typedef struct
 	int key[SDL_NUM_SCANCODES];
 	int mousex,mousey;
 	int mousexrel,mouseyrel;
+	float mousexwheel,mouseywheel;
 	char mousebuttons[8];
 	char quit;
 } E_input;
