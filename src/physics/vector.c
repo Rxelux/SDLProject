@@ -95,6 +95,12 @@ void LerpV(P_vector* src,P_vector* dest,float time){
 	InitV(src,src->x*(1-time) + dest->x*time,src->y*(1-time) + dest->y*time);
 }
 
+void LerpF(float* src,float dest,float time){
+	if(time>1)time=1;
+	if(time<0)time=0;
+	*src = *src*(1-time) + dest*time;
+}
+
 P_vector VLerp(P_vector* src,P_vector* dest,float time){
 	if(time>1)time=1;
 	if(time<0)time=0;

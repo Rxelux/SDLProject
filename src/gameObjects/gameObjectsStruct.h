@@ -8,16 +8,8 @@
 #ifndef GAMEOBJECTS_GAMEOBJECTSSTRUCT_H_
 #define GAMEOBJECTS_GAMEOBJECTSSTRUCT_H_
 
-#include "../physics/physics.h"
-#include "../sprite/sprite.h"
-
-//----CAMERA----------------------------------
-typedef struct{
-	SDL_Window* window;						//la fenetre qui contient le jeu
-	SDL_Renderer* renderer;					//le renderer qui affiche les elements du jeu dans la fenetre
-	P_transform transform;					//le tranform de la camera
-
-}G_camera;
+#include "../engine/engineStruct.h"
+#include "../engine/engineFonct.h"
 
 //----PLAYER------------------------------------------------
 
@@ -35,13 +27,26 @@ typedef struct{
 	P_vector keyForce;
 	P_vector gravity;
 	P_vector jump;
+	P_vector fly;
 	bool hitBottom;
 	bool hitRight;
 	bool hitLeft;
 	bool hitTop;
 	bool hitStep;
+	int maxJumpTime;
+	int minJumpTime;
+	int jumpTime;
+	int power;
 
 }G_player;
+
+typedef struct{
+	bool active;
+	P_transform transform;
+	S_sprite sprite;
+	S_sprite sprite2;
+
+}G_scarf;
 
 //----MAP------------------------------------------------
 
@@ -52,18 +57,89 @@ typedef struct{
 	P_hitBox hitBox[1000];
 	int sizeTileSetX,sizeTileSetY;
 	int sizeMapX,sizeMapY;
-	int tileRef[6][100000];
-	SDL_Texture* sprites[6];
-	P_transform paralax[6];
+	int tileRef[5][100000];
+	SDL_Texture* sprites[5];
+	P_transform paralax[5];
 }G_tileMap;
 
-//----BLOCTEST-------------------------------------------------
+//----menuBG-------------------------------------------------
 
 typedef struct{
 	bool active;
 	P_transform transform;
 	S_sprite sprite;
-	P_hitBox hitBox;
-}G_blocTest;
+	Mix_Music *BGMusic;
+
+}G_menuBG;
+
+//----textMenu-------------------------------------------------
+
+typedef struct{
+	bool active;
+	P_transform transform;
+	S_sprite sprite;
+	P_vector pos[4];
+	SDL_Texture* sprites[4];
+
+}G_textMenu;
+
+typedef struct{
+	bool active;
+	P_transform transform;
+	S_sprite sprite;
+	P_vector pos[10];
+	SDL_Texture* sprites[10];
+
+}G_textCredits;
+//----buttonMenu-----------------
+
+typedef struct{
+	bool active;
+	E_button buttons[4];
+	Mix_Chunk *ButtonSound;
+	Mix_Chunk *ButtonSoundValid;
+
+}G_buttonsMenu;
+
+typedef struct{
+	bool active;
+	E_button buttons[10];
+	Mix_Chunk *ButtonSound;
+	Mix_Chunk *ButtonSoundValid;
+	int into;
+
+
+}G_buttonsOption;
+
+//----buttonMap-----------------
+
+typedef struct{
+	P_transform transform;
+	bool active;
+	S_sprite sprite;
+	E_button buttons[5];
+	Mix_Chunk *ButtonSound;
+	Mix_Chunk *ButtonSoundValid;
+
+}G_buttonsMap;
+
+//----mapBG-------------------------------------------------
+
+typedef struct{
+	bool active;
+	P_transform transform;
+	S_sprite sprite;
+
+}G_mapBG;
+
+//----cutsceneBG-------------------------------------------------
+
+typedef struct{
+	bool active;
+	P_transform transform;
+	P_vector dest;
+	S_sprite sprite;
+
+}G_cutscene;
 
 #endif /* GAMEOBJECTS_GAMEOBJECTSSTRUCT_H_ */

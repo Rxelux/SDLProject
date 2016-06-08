@@ -8,7 +8,6 @@
 #ifndef SCENES_SCENESSTRUCT_H_
 #define SCENES_SCENESSTRUCT_H_
 
-#include "../events/events.h"
 #include "../gameObjects/gameObjectsStruct.h"
 
 
@@ -16,13 +15,32 @@
 //----SCENE LVL1--------------------------
 typedef struct{
 
-	E_input input;							//le E_input qui gere les entrée clavier,souris et manette pour le jeu
-	G_camera camera;
-	//G_gameObject gameObjects[MAX_OBJECTS];	//gameObjects un tableau de G_gameObject qui contient les elements du jeu (le joueur, la map, les scores par exemple)
 	G_player player;
+	G_scarf scarf;
 	G_tileMap tileMap;
-	G_blocTest blocTest;
+	G_menuBG menuBG;
+
 }S_scene_lvl1;
+
+typedef struct{
+	G_menuBG menuBG;
+	G_textMenu textMenu;
+	G_textCredits textCredits;
+	G_buttonsMenu bm;
+	G_buttonsOption bo;
+
+}S_scene_menu;
+
+typedef struct{
+	G_mapBG mapBG;
+	G_buttonsMap bm;
+
+}S_scene_map;
+
+typedef struct{
+	G_cutscene ctsBG;
+
+}S_scene_cutscene;
 
 #define PLAYER_FRAME 120
 

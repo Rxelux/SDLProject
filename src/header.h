@@ -20,9 +20,10 @@
 #include <SDL2_ttf/SDL_ttf.h>
 #include <SDL2_mixer/SDL_mixer.h>
 
-#define SCREEN_WIDTH 1280
-#define SCREEN_HEIGHT 720
+#define SCREEN_WIDTH 512
+#define SCREEN_HEIGHT 512
 #define PLAYER_FRAME 120
+#define GLOBAL_RESO 10
 
 typedef char bool;
 #define true 1

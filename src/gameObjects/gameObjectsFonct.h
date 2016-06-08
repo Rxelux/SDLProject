@@ -11,35 +11,63 @@
 #include "gameObjectsStruct.h"
 #include "../scenes/scenesStruct.h"
 
-//----CAMERA----------------------------------
 
-int InitCamera(S_scene_lvl1* sc);
-void RenderGameObject(G_camera* camera,S_sprite* sprite);
-void ToCameraSpace(int* x,int* y,G_camera* camera);
-void ToCameraSpaceFloat(float* x,float* y,G_camera* camera);
-int CreateWindow(SDL_Window** window,int posX,int posY,int sizeX,int sizeY);
-int CreateRenderer(SDL_Window** window,SDL_Renderer** renderer);
-void SetupRenderer(SDL_Renderer** renderer,int sizeX,int sizeY);
-SDL_Texture* LoadTexture(G_camera* camera, char* path);
-void DEBUGPOINT(P_vector* point,G_camera* camera);
-void DEBUGVECTOR(P_vector* start,P_vector* end,G_camera* camera,int R,int G,int B);
-void DEBUGHITBOX (P_hitBox* hitBox,G_camera* camera,int R,int G,int B);
 
 //----PLAYER------------------------------------------------
 
-void InitPlayer(S_scene_lvl1* sc);
-void UpdatePlayer(S_scene_lvl1* sc);
-void RenderPlayer(S_scene_lvl1* sc);
-bool TestCollisionMap(G_player* player,P_vector* posTest,P_hitBox* hitBox,G_tileMap* tileMap,int pX,int mX,int pY,int mY);
-//----MAP------------------------------------------------
+void InitPlayer(S_scene_lvl1* sc,E_camera* camera);
+void UpdatePlayer(S_scene_lvl1* sc,E_input* input,E_camera* camera);
+void RenderPlayer(S_scene_lvl1* sc,E_camera* camera);
 
-void InitTileMap(S_scene_lvl1* sc);
-void UpdateTileMap(S_scene_lvl1* sc);
-void RenderTileMap(S_scene_lvl1* sc,int j);
+void InitScarf(S_scene_lvl1* sc,E_camera* camera);
+void UpdateScarf(S_scene_lvl1* sc,E_camera* camera);
+void RenderScarf(S_scene_lvl1* sc,E_camera* camera);
+
+bool TestCollisionMap(G_player* player,P_vector* posTest,P_hitBox* hitBox,G_tileMap* tileMap,int pX,int mX,int pY,int mY);
+//----TileMAP------------------------------------------------
+
+void InitTileMap(S_scene_lvl1* sc,E_camera* camera);
+void UpdateTileMap(S_scene_lvl1* sc,E_camera* camera);
+void RenderTileMap(S_scene_lvl1* sc,E_camera* camera,int j);
+
 P_vector GetMapPos(P_vector* v,G_tileMap* tileMap);
 
-//----BLOCTEST----------------------
+//----MenuBG--------------------------------------------------
 
-void InitBlocTest(S_scene_lvl1* sc);
-void RenderBlocTest(S_scene_lvl1* sc);
+void InitMenuBG(S_scene_menu* sc,E_camera* camera);
+void InitLvl1BG(S_scene_lvl1* sc,E_camera* camera);
+void UpdateLvl1BG(S_scene_lvl1* sc,E_camera* camera);
+void RenderMenuBG(S_scene_menu* sc,E_camera* camera);
+void RenderLvl1BG(S_scene_lvl1* sc,E_camera* camera);
+
+//----textMenu--------------------------------------------------
+
+void InitTextMenu(S_scene_menu* sc,E_camera* camera);
+void RenderTextMenu(S_scene_menu* sc,E_camera* camera);
+
+void InitTextCredits(S_scene_menu* sc,E_camera* camera);
+void UpdateTextCredits(S_scene_menu* sc,E_input* input,E_camera* camera);
+void RenderTextCredits(S_scene_menu* sc,E_camera* camera);
+//----ButtonsMenu--------------------------------------------------
+
+void InitButtonsMenu(S_scene_menu* sc,E_camera* camera);
+void UpdateButtonsMenu(S_scene_menu* sc,E_input* input,E_camera* camera);
+void RenderButtonsMenu(S_scene_menu* sc,E_camera* camera);
+
+void InitButtonsOption(S_scene_menu* sc,E_input* input,E_camera* camera);
+void UpdateButtonsOption(S_scene_menu* sc,E_input* input,E_camera* camera);
+void RenderButtonsOption(S_scene_menu* sc,E_camera* camera);
+bool testKey(E_input* input,int key);
+
+//----MapBG--------------------------------------------------
+
+void InitMapBG(S_scene_map* sc,E_camera* camera);
+void RenderMapBG(S_scene_map* sc,E_camera* camera);
+
+//----ButtonsMeap--------------------------------------------------
+
+void InitButtonsMap(S_scene_map* sc,E_camera* camera);
+void UpdateButtonsMap(S_scene_map* sc,E_input* input,E_camera* camera);
+void RenderButtonsMap(S_scene_map* sc,E_camera* camera);
+
 #endif /* GAMEOBJECTS_GAMEOBJECTSFONCT_H_ */

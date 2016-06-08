@@ -1,33 +1,34 @@
 #include "gameObjectsFonct.h"
 
-void InitPlayer(S_scene_lvl1* sc){
+void InitPlayer(S_scene_lvl1* sc,E_camera* camera){
 
 	G_player* player = &sc->player;
 
 	player->active = 1;
 	InitH(&player->hitBox,8,15,8,-15,-8,-15,-8,15,0,0,0,0,4);
-	InitH(&player->stepHitBox,9,12,9,15,-9,15,-9,12,0,0,0,0,4);
+	InitH(&player->stepHitBox,9,14,9,15,-9,15,-9,14,0,0,0,0,4);
 	InitH(&player->bottomHitBox,8,14,8,16,-8,16,-8,14,0,0,0,0,4);
-	InitH(&player->topHitBox,7,-14,7,-16,-7,-16,-7,-14,0,0,0,0,4);
-	InitH(&player->rightHitBox,7,-14,9,-14,9,10,7,10,0,0,0,0,4);
-	InitH(&player->leftHitBox,-7,-14,-9,-14,-9,10,-7,10,0,0,0,0,4);
-	InitT(&player->transform,-800,-40,10,10);
+	InitH(&player->topHitBox,8,-14,8,-16,-8,-16,-8,-14,0,0,0,0,4);
+	InitH(&player->rightHitBox,7,-15,9,-15,9,14,7,14,0,0,0,0,4);
+	InitH(&player->leftHitBox,-7,-15,-9,-15,-9,14,-7,14,0,0,0,0,4);
+	InitT(&player->transform,-118000,-800,10,10);
 	InitB(&player->body,0,0,0,0,10,0.2,0.5);
 	InitT(&player->sprite.srce,0,0,32,32);
 	InitT(&player->sprite.dest,0,0,32,32);
-	player->sprite.texture = LoadTexture(&sc->camera,"src/resources/IdleSheet.png");
+	player->sprite.texture = LoadTexture(camera,"src/resources/playerSprite.png");
 	player->sprite.frameTime = 0;
-
+	player->maxJumpTime = 5;
+	player->minJumpTime = 5;
+	player->jumpTime = 0;
 	InitV(&player->keyForce,0,0);
-	InitV(&player->gravity,0,9.81);
-	InitV(&player->jump,0,-100);
+	InitV(&player->gravity,0,98.1);
+	InitV(&player->jump,0,-500);
+	InitV(&player->fly,0,-120);
+	player->power = 0;
 
 }
 
-void UpdatePlayer(S_scene_lvl1* sc){
-
-	sc->camera.transform.scale.x = sc->input.mouseywheel;
-	sc->camera.transform.scale.y = sc->input.mouseywheel;
+void UpdatePlayer(S_scene_lvl1* sc,E_input* input,E_camera* camera){
 
 	G_player* player = &sc->player;
 	player->hitBottom = TestCollisionMap(player,&player->transform.position,&player->bottomHitBox,&sc->tileMap,-2,+2,-3,+3);
@@ -40,16 +41,16 @@ void UpdatePlayer(S_scene_lvl1* sc){
 	//---------input_controle du joueur---------------
 	MulV(&player->keyForce,0);
 	bool jump = false;
-	if(!player->hitTop && sc->input.key[SDL_SCANCODE_W]){ //z
+	if(!player->hitTop && input->key[input->up]){ //z
 		jump = true;
 	}
-	if(!player->hitBottom && sc->input.key[SDL_SCANCODE_S]){ //s
+	if(!player->hitBottom && input->key[input->down]){ //s
 		player->keyForce.y += 1;
 	}
-	if(!player->hitLeft && sc->input.key[SDL_SCANCODE_A]){ //q
+	if(!player->hitLeft && input->key[input->left]){ //q
 		player->keyForce.x -= 1;
 	}
-	if(!player->hitRight && sc->input.key[SDL_SCANCODE_D]){ //d
+	if(!player->hitRight && input->key[input->right]){ //d
 		player->keyForce.x += 1;
 	}
 	if(player->hitStep && player->hitBottom && !player->hitRight && !player->hitLeft){
@@ -57,22 +58,30 @@ void UpdatePlayer(S_scene_lvl1* sc){
 	}
 
 	//--------calcul du deplacement---------
-	//NormalizeV(&player->keyForce);
-	MulV(&player->keyForce,10);
 
-	AddFrictionB(&player->body);
-	if(!player->hitBottom){
-		AddForceB(&player->body,&player->gravity);
-	}else{
-		if(jump && !player->hitRight && !player->hitLeft){
-			AddForceB(&player->body,&player->jump);
+	MulV(&player->keyForce,35);
+
+	if(!player->hitBottom){ 												//le joueur ne touche pas en bas donc il est en l'air
+		AddForceB(&player->body,&player->gravity);							//on applique donc la gravité
+		if(jump && player->jumpTime>0){ 									//si il reste de temps  de saut et q l'on saute
+			player->jumpTime--;													//on reduit le temps de saut
+			AddForceB(&player->body,&player->fly);							//appliquer une force de vol
+
+		}
+	}else{																	//le joueur touche en bas donc il est au sol
+		if(player->jumpTime<player->minJumpTime){
+			player->jumpTime = player->minJumpTime;							//on reinit le temps de saut
+		}
+		if(jump){															//si l'on saute
+			AddForceB(&player->body,&player->jump);							//appliquer une force de saut initale
 		}
 	}
 	AddForceB(&player->body,&player->keyForce);
 	ApplyForceB(&player->body);
+	AddFrictionB(&player->body);
 
-	/*une fois la veloc calculée on teste si apres deplacement on touche qqch
-	  il faut donc obtenir une copie de la position future et tester si on peut s'y deplacer*/
+	//une fois la veloc calculée on teste si apres deplacement on touche qqch
+	//il faut donc obtenir une copie de la position future et tester si on peut s'y deplacer
 
 	//----test collision map------
 	P_vector velTest = VEqu(&player->body.velocity);
@@ -83,7 +92,7 @@ void UpdatePlayer(S_scene_lvl1* sc){
 	collide = TestCollisionMap(player,&posTest,&player->hitBox,&sc->tileMap,-2,+2,-2,+2);
 
 	if(!collide){
-		printf("no col %f; %f \n",player->body.velocity.x,player->body.velocity.y);
+		//printf("no col %f; %f \n",player->body.velocity.x,player->body.velocity.y);
 		AddV(&player->transform.position,&velTest);
 	}else{
 		int i,j;
@@ -100,9 +109,11 @@ void UpdatePlayer(S_scene_lvl1* sc){
 			if(collide){
 				MulV(&velTest,0.5);
 			}
-			P_hitBox hb = HMatchPS(&player->hitBox,&posTest,&player->transform.scale);
-			DEBUGHITBOX(&hb,&sc->camera,128,0,0);
-			AddV(&player->transform.position,&velTest);
+			MulV(&velTest,0.9);
+			posTest = VAdd(&player->transform.position,&velTest);
+			if(DistanceV(&posTest,&player->transform.position)<50){
+				AddV(&player->transform.position,&velTest);
+			}
 
 			player->hitBottom = TestCollisionMap(player,&player->transform.position,&player->bottomHitBox,&sc->tileMap,-2,+2,-3,+3);
 			player->hitRight = TestCollisionMap(player,&player->transform.position,&player->rightHitBox,&sc->tileMap,-2,+2,-3,+3);
@@ -121,38 +132,86 @@ void UpdatePlayer(S_scene_lvl1* sc){
 			if(player->hitRight && player->body.velocity.x>0){
 				player->body.velocity.x=0;
 			}
-			printf("col %f; %f \n",player->body.velocity.x,player->body.velocity.y);
+			//printf("col %f; %f \n",player->body.velocity.x,player->body.velocity.y);
 		}
 	}
 
-	if(DistanceV(&player->transform.position,&sc->camera.transform.position)>10){
-		LerpV(&sc->camera.transform.position,&player->transform.position,DistanceV(&player->transform.position,&sc->camera.transform.position)/100);
-	}
-
-	//test texture rect thingy
+	//----animation de perso-----------
 	int currentTime = SDL_GetTicks();
 
 	if(currentTime - player->sprite.frameTime > PLAYER_FRAME){
 
-		player->sprite.srce.position.x++;
-		if(player->sprite.srce.position.x > 3){
-			player->sprite.srce.position.x = 0;
-			player->sprite.srce.position.y++;
+		if(MagnitudeV(&player->body.velocity)>0.1){				//le perso bouge donc anim walk
+			if(player->body.velocity.x>0){						//le perso va a droite
+				player->sprite.srce.position.y = 1;
+			}else{
+				player->sprite.srce.position.y = 3;
+			}
+
+		}else{
+			if(player->body.velocity.x>0){						//le perso allais droite
+				player->sprite.srce.position.y = 0;
+			}
+			if(player->body.velocity.x<0){						//le perso allais gauche
+				player->sprite.srce.position.y = 2;
+			}
 		}
-		if(player->sprite.srce.position.y > 2){
+		player->sprite.srce.position.x++;
+		if(player->sprite.srce.position.x > 11){
 			player->sprite.srce.position.x = 0;
-			player->sprite.srce.position.y = 0;
 		}
 
 		player->sprite.frameTime = currentTime;
 	}
-	SetSrceRect(&player->sprite,&player->transform);
-	//printf("%f , %f \n",player->sprite.pos.x,player->sprite.pos.y);
-	//printf("%f; %f \n",player->transform.position.x,player->transform.position.y);
-	//printf("%f; %f \n",player->body.velocity.x,player->body.velocity.y);
-	//printf("%f; %f \n",sc->camera.transform.position.x,sc->camera.transform.position.y);
-	//printf("%f,%f \n",GetMapPos(&player->transform.position,&sc->tileMap).x,GetMapPos(&player->transform.position,&sc->tileMap).y);
+	SetRectSprite(&player->sprite,&player->transform);
 
+	//----contol camera
+
+	camera->transform.scale.x = input->mouseywheel;
+	camera->transform.scale.y = input->mouseywheel;
+
+	if(camera->transform.scale.x>0.75){
+		camera->transform.scale.x=0.75;
+		input->mouseywheel=0.75;
+	}
+	if(camera->transform.scale.x<0.25){
+		camera->transform.scale.x=0.25;
+		input->mouseywheel=0.25;
+	}
+	if(camera->transform.scale.y>0.75){
+		camera->transform.scale.y=0.75;
+		input->mouseywheel=0.75;
+	}
+	if(camera->transform.scale.y<0.25){
+		camera->transform.scale.y=0.25;
+		input->mouseywheel=0.25;
+	}
+
+	//printf("%f\n",camera->transform.scale.x);
+	if(DistanceV(&camera->transform.position,&player->transform.position)>10){
+		LerpV(&camera->transform.position,&player->transform.position,DistanceV(&player->transform.position,&camera->transform.position)/1000);
+	}
+	//printf("%f , %f \n",player->sprite.pos.x,player->sprite.pos.y);
+	printf("pos %f; %f \n",player->transform.position.x,player->transform.position.y);
+	//printf("vel %f; %f \n",player->body.velocity.x,player->body.velocity.y);
+	//printf("%f; %f \n",camera->transform.position.x,camera->transform.position.y);
+
+	//------control powerjump
+
+	int px = GetMapPos(&player->transform.position,&sc->tileMap).x;
+	int py = GetMapPos(&player->transform.position,&sc->tileMap).y;
+	int k = px+py*sc->tileMap.sizeMapX;
+
+	//printf("[%d,%d]=%d \n",px,py,sc->tileMap.tileRef[3][k]);
+	//printf("%d \n",player->maxJumpTime);
+	if(sc->tileMap.tileRef[2][k] > 168 && sc->tileMap.tileRef[2][k] < 173){
+		sc->tileMap.tileRef[2][k] = 0;
+		player->maxJumpTime += 14;
+		player->power ++;
+	}
+	if(sc->tileMap.tileRef[2][k] > 25 && sc->tileMap.tileRef[2][k] < 29){
+		player->jumpTime = player->maxJumpTime;								//on met le temps de saut au max
+	}
 }
 
 bool TestCollisionMap(G_player* player,P_vector* posTest,P_hitBox* hitBox,G_tileMap* tileMap,int pX,int mX,int pY,int mY){
@@ -168,7 +227,7 @@ bool TestCollisionMap(G_player* player,P_vector* posTest,P_hitBox* hitBox,G_tile
 				k = i+j*tileMap->sizeMapX;
 				P_vector mapPos = VInit((i*tileMap->sprite.dest.scale.x - tileMap->sizeMapX*tileMap->sprite.dest.scale.x/2)*tileMap->transform.scale.x,
 						(j*tileMap->sprite.dest.scale.y- tileMap->sizeMapY*tileMap->sprite.dest.scale.y/2)*tileMap->transform.scale.x);
-				P_hitBox hbmap = HMatchPS(&tileMap->hitBox[tileMap->tileRef[3][k]],&mapPos,&tileMap->transform.scale);
+				P_hitBox hbmap = HMatchPS(&tileMap->hitBox[tileMap->tileRef[2][k]],&mapPos,&tileMap->transform.scale);
 				collision = CollisionAB(&hbmap,&hb);
 				//printf("\t collision : %d \n",collision);
 				if(collision)return true;
@@ -178,21 +237,10 @@ bool TestCollisionMap(G_player* player,P_vector* posTest,P_hitBox* hitBox,G_tile
 	return false;
 }
 
-void RenderPlayer(S_scene_lvl1* sc){
+void RenderPlayer(S_scene_lvl1* sc,E_camera* camera){
 
 	G_player* player = &sc->player;
-	P_hitBox hb = HMatchT(&player->hitBox,&player->transform);
-	RenderGameObject(&sc->camera,&player->sprite);
-	DEBUGHITBOX(&hb,&sc->camera,128,255,0);
-	hb = HMatchT(&player->bottomHitBox,&player->transform);
-	DEBUGHITBOX(&hb,&sc->camera,0,128,255);
-	hb = HMatchT(&player->topHitBox,&player->transform);
-	DEBUGHITBOX(&hb,&sc->camera,255,0,128);
-	hb = HMatchT(&player->leftHitBox,&player->transform);
-	DEBUGHITBOX(&hb,&sc->camera,128,0,255);
-	hb = HMatchT(&player->rightHitBox,&player->transform);
-	DEBUGHITBOX(&hb,&sc->camera,255,128,0);
-	hb = HMatchT(&player->stepHitBox,&player->transform);
-	DEBUGHITBOX(&hb,&sc->camera,0,255,128);
+	RenderGameObject(camera,&player->sprite);
 
 }
+

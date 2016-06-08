@@ -8,11 +8,10 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
--include src/sprite/subdir.mk
 -include src/scenes/subdir.mk
 -include src/physics/subdir.mk
 -include src/gameObjects/subdir.mk
--include src/events/subdir.mk
+-include src/engine/subdir.mk
 -include src/SDLSetup/subdir.mk
 -include src/subdir.mk
 -include subdir.mk

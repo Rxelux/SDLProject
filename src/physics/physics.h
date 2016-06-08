@@ -41,6 +41,7 @@ void ToWindowSpaceV(P_vector* v);
 P_vector VToWindowSpace(P_vector* v);
 
 void LerpV(P_vector* src,P_vector* dest,float time);
+void LerpF(float* src,float dest,float time);
 P_vector VLerp(P_vector* src,P_vector* dest,float time);
 
 //----TRANSFORM---------------------------------------------

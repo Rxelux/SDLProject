@@ -15,9 +15,8 @@ C_DEPS :=
 SUBDIRS := \
 src \
 src/SDLSetup \
-src/events \
+src/engine \
 src/gameObjects \
 src/physics \
 src/scenes \
-src/sprite \
 

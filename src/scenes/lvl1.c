@@ -1,40 +1,52 @@
 #include "../gameObjects/gameObjectsFonct.h"
 #include "scenesFonct.h"
 
-int InitScene_lvl1(S_scene_lvl1* sc){
+int InitScene_lvl1(S_scene_lvl1* sc,E_camera* camera){
 
 	//init camera -> init window et renderer [renderer/renderer]
-	if(!InitCamera(sc)){
-		return 101;
-	}
-	//init le tableau pour les inputs (voir events) [events/input]
-	InitEvents(&sc->input);
+
+	InitT(&camera->transform,0,0,1,1);
 	// Init le player
-	InitPlayer(sc);
+	InitPlayer(sc,camera);
 	//InitBlocTest(sc);
 	//init map
-	InitTileMap(sc);
+	InitTileMap(sc,camera);
+	InitLvl1BG(sc,camera);
+
+	InitScarf(sc,camera);
 
 	return 0;
 }
 
-int UpdateScene_lvl1(S_scene_lvl1* sc){
+int UpdateScene_lvl1(S_scene_lvl1* sc,E_input* input,E_camera* camera){
+
+	if(input->key[SDL_SCANCODE_P]){
+		input->scene = 0;
+	}
 
 	//la on lance toute les fonction update de tout les gameobject du jeu
-	UpdateEvents(&sc->input);
+	SDL_RenderClear(camera->renderer);
 
-	UpdateTileMap(sc);
-	SDL_RenderClear(sc->camera.renderer);
+	UpdateTileMap(sc,camera);
+	UpdatePlayer(sc,input,camera);
+	UpdateLvl1BG(sc,camera);
+	UpdateScarf(sc,camera);
 
-	RenderTileMap(sc,0);
-	RenderTileMap(sc,1);
-	RenderTileMap(sc,2);
-	RenderPlayer(sc);
-	RenderTileMap(sc,3);
-	RenderTileMap(sc,4);
-	RenderTileMap(sc,5);
-	UpdatePlayer(sc);
-	SDL_RenderPresent(sc->camera.renderer);
+
+	RenderLvl1BG(sc,camera);
+	RenderTileMap(sc,camera,0);
+	RenderTileMap(sc,camera,1);
+
+
+	RenderScarf(sc,camera);
+	RenderTileMap(sc,camera,2);
+	RenderPlayer(sc,camera);
+
+
+	RenderTileMap(sc,camera,3);
+	RenderTileMap(sc,camera,4);
+
+	SDL_RenderPresent(camera->renderer);
 
 	return 0;
 }

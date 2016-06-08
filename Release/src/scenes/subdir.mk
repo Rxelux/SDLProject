@@ -4,13 +4,19 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../src/scenes/lvl1.c 
+../src/scenes/lvl1.c \
+../src/scenes/map.c \
+../src/scenes/menu.c 
 
 OBJS += \
-./src/scenes/lvl1.o 
+./src/scenes/lvl1.o \
+./src/scenes/map.o \
+./src/scenes/menu.o 
 
 C_DEPS += \
-./src/scenes/lvl1.d 
+./src/scenes/lvl1.d \
+./src/scenes/map.d \
+./src/scenes/menu.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

@@ -4,18 +4,39 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../src/gameObjects/camera.c \
+../src/gameObjects/buttonsMap.c \
+../src/gameObjects/buttonsMenu.c \
+../src/gameObjects/buttonsOption.c \
+../src/gameObjects/map.c \
+../src/gameObjects/menuBG.c \
 ../src/gameObjects/player.c \
+../src/gameObjects/scarf.c \
+../src/gameObjects/textCredits.c \
+../src/gameObjects/textMenu.c \
 ../src/gameObjects/tileMap.c 
 
 OBJS += \
-./src/gameObjects/camera.o \
+./src/gameObjects/buttonsMap.o \
+./src/gameObjects/buttonsMenu.o \
+./src/gameObjects/buttonsOption.o \
+./src/gameObjects/map.o \
+./src/gameObjects/menuBG.o \
 ./src/gameObjects/player.o \
+./src/gameObjects/scarf.o \
+./src/gameObjects/textCredits.o \
+./src/gameObjects/textMenu.o \
 ./src/gameObjects/tileMap.o 
 
 C_DEPS += \
-./src/gameObjects/camera.d \
+./src/gameObjects/buttonsMap.d \
+./src/gameObjects/buttonsMenu.d \
+./src/gameObjects/buttonsOption.d \
+./src/gameObjects/map.d \
+./src/gameObjects/menuBG.d \
 ./src/gameObjects/player.d \
+./src/gameObjects/scarf.d \
+./src/gameObjects/textCredits.d \
+./src/gameObjects/textMenu.d \
 ./src/gameObjects/tileMap.d 
 
 
