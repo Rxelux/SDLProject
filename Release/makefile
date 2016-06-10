@@ -34,7 +34,7 @@ all: SDLProject
 SDLProject: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: MacOS X C Linker'
-	gcc -F/Library/Frameworks -framework SDL2 -framework SDL2_image -framework SDL2_mixer -framework SDL2_ttf -framework Cocoa -o "SDLProject" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc -F/Library/Frameworks -framework SDL2 -framework SDL2_image -framework  SDL2_mixer -framework SDL2_ttf -framework Cocoa -o "SDLProject" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

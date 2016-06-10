@@ -11,11 +11,11 @@ void InitPlayer(S_scene_lvl1* sc,E_camera* camera){
 	InitH(&player->topHitBox,8,-14,8,-16,-8,-16,-8,-14,0,0,0,0,4);
 	InitH(&player->rightHitBox,7,-15,9,-15,9,14,7,14,0,0,0,0,4);
 	InitH(&player->leftHitBox,-7,-15,-9,-15,-9,14,-7,14,0,0,0,0,4);
-	InitT(&player->transform,-118000,-800,10,10);
-	InitB(&player->body,0,0,0,0,10,0.2,0.5);
+	InitT(&player->transform,-30000,-400,10,10);
+	InitB(&player->body,1,0,0,0,10,0.2,0.5);
 	InitT(&player->sprite.srce,0,0,32,32);
 	InitT(&player->sprite.dest,0,0,32,32);
-	player->sprite.texture = LoadTexture(camera,"src/resources/playerSprite.png");
+	player->sprite.texture = LoadTexture(camera,"./src/resources/playerSprite.png");
 	player->sprite.frameTime = 0;
 	player->maxJumpTime = 5;
 	player->minJumpTime = 5;
@@ -25,6 +25,10 @@ void InitPlayer(S_scene_lvl1* sc,E_camera* camera){
 	InitV(&player->jump,0,-500);
 	InitV(&player->fly,0,-120);
 	player->power = 0;
+	player->walkSound = Mix_LoadWAV( "./src/resources/WalkSound.wav" );
+	player->jumpSound = Mix_LoadWAV( "./src/resources/JumpSound.wav" );
+	player->powerupSound = Mix_LoadWAV( "./src/resources/PowerupSound.wav" );
+	player->wind = Mix_LoadWAV( "./src/resources/Wind.wav" );
 
 }
 
@@ -74,6 +78,7 @@ void UpdatePlayer(S_scene_lvl1* sc,E_input* input,E_camera* camera){
 		}
 		if(jump){															//si l'on saute
 			AddForceB(&player->body,&player->jump);							//appliquer une force de saut initale
+			Mix_PlayChannel( -1, player->jumpSound, 0 );					//lancer le son du saut
 		}
 	}
 	AddForceB(&player->body,&player->keyForce);
@@ -138,7 +143,9 @@ void UpdatePlayer(S_scene_lvl1* sc,E_input* input,E_camera* camera){
 
 	//----animation de perso-----------
 	int currentTime = SDL_GetTicks();
-
+	if(currentTime%(PLAYER_FRAME*4) == 0){
+		Mix_PlayChannel( -1, player->wind, 0 );
+	}
 	if(currentTime - player->sprite.frameTime > PLAYER_FRAME){
 
 		if(MagnitudeV(&player->body.velocity)>0.1){				//le perso bouge donc anim walk
@@ -159,8 +166,11 @@ void UpdatePlayer(S_scene_lvl1* sc,E_input* input,E_camera* camera){
 		player->sprite.srce.position.x++;
 		if(player->sprite.srce.position.x > 11){
 			player->sprite.srce.position.x = 0;
-		}
 
+		}
+		if(MagnitudeV(&player->body.velocity)>0.1  && (player->sprite.srce.position.x == 0 || player->sprite.srce.position.x == 6) && player->hitBottom){
+			Mix_PlayChannel( -1, player->walkSound, 0 );
+		}
 		player->sprite.frameTime = currentTime;
 	}
 	SetRectSprite(&player->sprite,&player->transform);
@@ -192,11 +202,11 @@ void UpdatePlayer(S_scene_lvl1* sc,E_input* input,E_camera* camera){
 		LerpV(&camera->transform.position,&player->transform.position,DistanceV(&player->transform.position,&camera->transform.position)/1000);
 	}
 	//printf("%f , %f \n",player->sprite.pos.x,player->sprite.pos.y);
-	printf("pos %f; %f \n",player->transform.position.x,player->transform.position.y);
+	//printf("pos %f; %f \n",player->transform.position.x,player->transform.position.y);
 	//printf("vel %f; %f \n",player->body.velocity.x,player->body.velocity.y);
 	//printf("%f; %f \n",camera->transform.position.x,camera->transform.position.y);
 
-	//------control powerjump
+	//------control powerjump / interaction avec tileMap
 
 	int px = GetMapPos(&player->transform.position,&sc->tileMap).x;
 	int py = GetMapPos(&player->transform.position,&sc->tileMap).y;
@@ -208,9 +218,15 @@ void UpdatePlayer(S_scene_lvl1* sc,E_input* input,E_camera* camera){
 		sc->tileMap.tileRef[2][k] = 0;
 		player->maxJumpTime += 14;
 		player->power ++;
+		Mix_PlayChannel( -1, player->powerupSound, 0 );
 	}
 	if(sc->tileMap.tileRef[2][k] > 25 && sc->tileMap.tileRef[2][k] < 29){
 		player->jumpTime = player->maxJumpTime;								//on met le temps de saut au max
+	}
+	if(sc->tileMap.tileRef[2][k] == 196){
+		printf("%d\n",sc->textTimer.timer.current-sc->textTimer.timer.start);								//on fini le lvl
+		EndTextTimer(sc,input);
+		input->scene = 0;
 	}
 }
 

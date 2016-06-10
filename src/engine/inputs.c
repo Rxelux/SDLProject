@@ -4,9 +4,22 @@ void InitEvents(E_input* in){
 
 	memset(in,0,sizeof(*in));
 	in->scene = 0;
-
 	FILE *myFile;
-	myFile = fopen("src/resources/save.txt", "r");
+		myFile = fopen("./src/resources/scores.txt", "r");
+		if (myFile == NULL){
+
+			printf("Error Reading File\n");
+			exit (0);
+		}
+
+	int i;
+	for(i = 0;i < 10;i++){
+		fscanf(myFile, "%[^,],",in->scores[i]);
+	}
+
+	fclose(myFile);
+
+	myFile = fopen("./src/resources/save.txt", "r");
 	if (myFile == NULL){
 
 		printf("Error Reading File\n");

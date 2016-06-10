@@ -24,4 +24,10 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
+	<variableList>
+		<variable>
+			<name>resource</name>
+			<value>file:/Users/robinpelletier/EclipseProjects/SDLProject/src/resources</value>
+		</variable>
+	</variableList>
 </projectDescription>

@@ -19,7 +19,7 @@ int main( int argc, char* args[] )
 	S_scene_menu men;
 	S_scene_lvl1 lv1;
 	S_scene_map map;
-	S_scene_cutscene cts;
+	//S_scene_cutscene cts;
 
 	while(!input.quit)
 	{

@@ -7,10 +7,10 @@ void InitMenuBG(S_scene_menu* sc,E_camera* camera){
 	InitT(&menuBG->transform,0,0,1,1);
 	InitT(&menuBG->sprite.srce,0,0,512,512);
 	InitT(&menuBG->sprite.dest,0,0,512,512);
-	menuBG->sprite.texture = LoadTexture(camera,"src/resources/BG.png");
+	menuBG->sprite.texture = LoadTexture(camera,"./src/resources/BG.png");
 	SetRectSprite(&menuBG->sprite,&menuBG->transform);
 
-	menuBG->BGMusic = Mix_LoadMUS( "src/resources/JourneyTitle.mp3" );
+	menuBG->BGMusic = Mix_LoadMUS( "./src/resources/JourneyTitle.mp3" );
 	if( Mix_PlayingMusic() == 0 )
 	{
 		//Play the music
@@ -25,7 +25,7 @@ void InitLvl1BG(S_scene_lvl1* sc,E_camera* camera){
 	InitT(&menuBG->transform,0,0,4,4);
 	InitT(&menuBG->sprite.srce,0,0,512,512);
 	InitT(&menuBG->sprite.dest,0,0,512,512);
-	menuBG->sprite.texture = LoadTexture(camera,"src/resources/BG.png");
+	menuBG->sprite.texture = LoadTexture(camera,"./src/resources/BG.png");
 	SetRectSprite(&menuBG->sprite,&menuBG->transform);
 
 }

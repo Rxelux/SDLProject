@@ -10,6 +10,10 @@ int InitScene_map(S_scene_map* sc,E_camera* camera){
 
 int UpdateScene_map(S_scene_map* sc,E_input* input,E_camera* camera){
 
+	if(input->key[SDL_SCANCODE_ESCAPE]){
+		input->scene = 0;
+	}
+
 	SDL_RenderClear(camera->renderer);
 
 	UpdateButtonsMap(sc,input,camera);

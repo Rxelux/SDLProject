@@ -37,6 +37,10 @@ typedef struct{
 	int minJumpTime;
 	int jumpTime;
 	int power;
+	Mix_Chunk* walkSound;
+	Mix_Chunk* jumpSound;
+	Mix_Chunk* powerupSound;
+	Mix_Chunk* wind;
 
 }G_player;
 
@@ -61,6 +65,13 @@ typedef struct{
 	SDL_Texture* sprites[5];
 	P_transform paralax[5];
 }G_tileMap;
+
+typedef struct{
+	bool active;
+	E_timer timer;
+	P_transform transform;
+	S_sprite sprite;
+}G_textTimer;
 
 //----menuBG-------------------------------------------------
 
@@ -91,6 +102,15 @@ typedef struct{
 	SDL_Texture* sprites[10];
 
 }G_textCredits;
+
+typedef struct{
+	bool active;
+	P_transform transform;
+	S_sprite sprite;
+	P_vector pos[10];
+	SDL_Texture* sprites[10];
+
+}G_textScores;
 //----buttonMenu-----------------
 
 typedef struct{

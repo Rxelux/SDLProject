@@ -14,11 +14,11 @@ void InitButtonsMap(S_scene_map* sc,E_camera* camera){
 
 	InitT(&bm->sprite.srce,0,0,14,18);
 	InitT(&bm->sprite.dest,0,0,14,18);
-	bm->sprite.texture = LoadTexture(camera,"src/resources/mapPlayer.png");
+	bm->sprite.texture = LoadTexture(camera,"./src/resources/mapPlayer.png");
 	bm->buttons[0].hover = true;
 
-	bm->ButtonSound = Mix_LoadWAV( "src/resources/ButtonSound.wav" );
-	bm->ButtonSoundValid = Mix_LoadWAV( "src/resources/ButtonSoundValid.wav" );
+	bm->ButtonSound = Mix_LoadWAV( "./src/resources/ButtonSound.wav" );
+	bm->ButtonSoundValid = Mix_LoadWAV( "./src/resources/ButtonSoundValid.wav" );
 }
 
 void UpdateButtonsMap(S_scene_map* sc,E_input* input,E_camera* camera){

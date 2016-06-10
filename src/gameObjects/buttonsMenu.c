@@ -12,14 +12,14 @@ void InitButtonsMenu(S_scene_menu* sc,E_camera* camera){
 		InitT(&bm->buttons[i].sprite.dest,0,0,1,1);
 	}
 
-	bm->buttons[0].sprite.texture = LoadText(camera,"src/resources/journey.ttf","Play",87,0,13,30);
-	bm->buttons[1].sprite.texture = LoadText(camera,"src/resources/journey.ttf","Option",87,0,13,30);
-	bm->buttons[2].sprite.texture = LoadText(camera,"src/resources/journey.ttf","Credits",87,0,13,30);
-	bm->buttons[3].sprite.texture = LoadText(camera,"src/resources/journey.ttf","Quit",87,0,13,30);
+	bm->buttons[0].sprite.texture = LoadText(camera,"./src/resources/journey.ttf","Play",87,0,13,30);
+	bm->buttons[1].sprite.texture = LoadText(camera,"./src/resources/journey.ttf","Option",87,0,13,30);
+	bm->buttons[2].sprite.texture = LoadText(camera,"./src/resources/journey.ttf","Credits",87,0,13,30);
+	bm->buttons[3].sprite.texture = LoadText(camera,"./src/resources/journey.ttf","Quit",87,0,13,30);
 	bm->buttons[0].hover = true;
 
-	bm->ButtonSound = Mix_LoadWAV( "src/resources/ButtonSound.wav" );
-	bm->ButtonSoundValid = Mix_LoadWAV( "src/resources/ButtonSoundValid.wav" );
+	bm->ButtonSound = Mix_LoadWAV( "./src/resources/ButtonSound.wav" );
+	bm->ButtonSoundValid = Mix_LoadWAV( "./src/resources/ButtonSoundValid.wav" );
 }
 
 void UpdateButtonsMenu(S_scene_menu* sc,E_input* input,E_camera* camera){
@@ -31,7 +31,7 @@ void UpdateButtonsMenu(S_scene_menu* sc,E_input* input,E_camera* camera){
 			LerpF(&bm->buttons[i].transform.position.x,20,0.1);
 			switch(i){
 				case 0 :
-					bm->buttons[0].sprite.texture = LoadText(camera,"src/resources/journey.ttf","-Play",107,20,33,32);
+					bm->buttons[0].sprite.texture = LoadText(camera,"./src/resources/journey.ttf","-Play",107,20,33,32);
 					if(input->key[input->select]){
 						Mix_PlayChannel( -1, bm->ButtonSoundValid, 0 );
 						input->key[input->select]=0;
@@ -40,7 +40,7 @@ void UpdateButtonsMenu(S_scene_menu* sc,E_input* input,E_camera* camera){
 				break;
 
 				case 1 :
-					bm->buttons[1].sprite.texture = LoadText(camera,"src/resources/journey.ttf","-Option",107,20,33,32);
+					bm->buttons[1].sprite.texture = LoadText(camera,"./src/resources/journey.ttf","-Option",107,20,33,32);
 					if(input->key[input->select]){
 						Mix_PlayChannel( -1, bm->ButtonSoundValid, 0 );
 						input->key[input->select]=0;
@@ -51,7 +51,7 @@ void UpdateButtonsMenu(S_scene_menu* sc,E_input* input,E_camera* camera){
 				break;
 
 				case 2 :
-					bm->buttons[2].sprite.texture = LoadText(camera,"src/resources/journey.ttf","-Credits",107,20,33,32);
+					bm->buttons[2].sprite.texture = LoadText(camera,"./src/resources/journey.ttf","-Credits",107,20,33,32);
 					if(input->key[input->select]){
 						Mix_PlayChannel( -1, bm->ButtonSoundValid, 0 );
 						input->key[input->select]=0;
@@ -62,7 +62,7 @@ void UpdateButtonsMenu(S_scene_menu* sc,E_input* input,E_camera* camera){
 				break;
 
 				case 3 :
-					bm->buttons[3].sprite.texture =LoadText(camera,"src/resources/journey.ttf","-Quit",107,20,33,32);
+					bm->buttons[3].sprite.texture =LoadText(camera,"./src/resources/journey.ttf","-Quit",107,20,33,32);
 					if(input->key[input->select]){
 						Mix_PlayChannel( -1, bm->ButtonSoundValid, 0 );
 						input->key[input->select]=0;
@@ -93,19 +93,19 @@ void UpdateButtonsMenu(S_scene_menu* sc,E_input* input,E_camera* camera){
 				Mix_PlayChannel( -1, bm->ButtonSound, 0 );
 				switch(i){
 					case 0 :
-						bm->buttons[0].sprite.texture = LoadText(camera,"src/resources/journey.ttf","Play",87,0,13,30);
+						bm->buttons[0].sprite.texture = LoadText(camera,"./src/resources/journey.ttf","Play",87,0,13,30);
 					break;
 
 					case 1 :
-						bm->buttons[1].sprite.texture = LoadText(camera,"src/resources/journey.ttf","Option",87,0,13,30);
+						bm->buttons[1].sprite.texture = LoadText(camera,"./src/resources/journey.ttf","Option",87,0,13,30);
 					break;
 
 					case 2 :
-						bm->buttons[2].sprite.texture = LoadText(camera,"src/resources/journey.ttf","Credits",87,0,13,30);
+						bm->buttons[2].sprite.texture = LoadText(camera,"./src/resources/journey.ttf","Credits",87,0,13,30);
 					break;
 
 					case 3 :
-						bm->buttons[3].sprite.texture = LoadText(camera,"src/resources/journey.ttf","Quit",87,0,13,30);
+						bm->buttons[3].sprite.texture = LoadText(camera,"./src/resources/journey.ttf","Quit",87,0,13,30);
 					break;
 				}
 			}

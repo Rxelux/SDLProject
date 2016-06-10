@@ -13,6 +13,7 @@ C_SRCS += \
 ../src/gameObjects/scarf.c \
 ../src/gameObjects/textCredits.c \
 ../src/gameObjects/textMenu.c \
+../src/gameObjects/textTimer.c \
 ../src/gameObjects/tileMap.c 
 
 OBJS += \
@@ -25,6 +26,7 @@ OBJS += \
 ./src/gameObjects/scarf.o \
 ./src/gameObjects/textCredits.o \
 ./src/gameObjects/textMenu.o \
+./src/gameObjects/textTimer.o \
 ./src/gameObjects/tileMap.o 
 
 C_DEPS += \
@@ -37,6 +39,7 @@ C_DEPS += \
 ./src/gameObjects/scarf.d \
 ./src/gameObjects/textCredits.d \
 ./src/gameObjects/textMenu.d \
+./src/gameObjects/textTimer.d \
 ./src/gameObjects/tileMap.d 
 
 

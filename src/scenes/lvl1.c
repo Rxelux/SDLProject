@@ -12,7 +12,7 @@ int InitScene_lvl1(S_scene_lvl1* sc,E_camera* camera){
 	//init map
 	InitTileMap(sc,camera);
 	InitLvl1BG(sc,camera);
-
+	InitTextTimer(sc,camera);
 	InitScarf(sc,camera);
 
 	return 0;
@@ -20,7 +20,7 @@ int InitScene_lvl1(S_scene_lvl1* sc,E_camera* camera){
 
 int UpdateScene_lvl1(S_scene_lvl1* sc,E_input* input,E_camera* camera){
 
-	if(input->key[SDL_SCANCODE_P]){
+	if(input->key[SDL_SCANCODE_ESCAPE]){
 		input->scene = 0;
 	}
 
@@ -31,20 +31,23 @@ int UpdateScene_lvl1(S_scene_lvl1* sc,E_input* input,E_camera* camera){
 	UpdatePlayer(sc,input,camera);
 	UpdateLvl1BG(sc,camera);
 	UpdateScarf(sc,camera);
+	UpdateTextTimer(sc,camera);
 
 
 	RenderLvl1BG(sc,camera);
-	RenderTileMap(sc,camera,0);
-	RenderTileMap(sc,camera,1);
+	RenderTileMap(sc,input,camera,0);
+	RenderTileMap(sc,input,camera,1);
 
 
 	RenderScarf(sc,camera);
-	RenderTileMap(sc,camera,2);
+	RenderTileMap(sc,input,camera,2);
+
+	RenderTextTimer(sc,camera);
 	RenderPlayer(sc,camera);
 
 
-	RenderTileMap(sc,camera,3);
-	RenderTileMap(sc,camera,4);
+	RenderTileMap(sc,input,camera,3);
+	RenderTileMap(sc,input,camera,4);
 
 	SDL_RenderPresent(camera->renderer);
 

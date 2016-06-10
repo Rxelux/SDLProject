@@ -10,8 +10,8 @@ void InitScarf(S_scene_lvl1* sc,E_camera* camera){
 	InitT(&scarf->sprite.dest,0,0,64,16);
 	InitT(&scarf->sprite2.srce,0,0,64,16);
 	InitT(&scarf->sprite2.dest,0,0,64,16);
-	scarf->sprite.texture = LoadTexture(camera,"src/resources/Scarf.png");
-	scarf->sprite2.texture = LoadTexture(camera,"src/resources/Scarf.png");
+	scarf->sprite.texture = LoadTexture(camera,"./src/resources/Scarf.png");
+	scarf->sprite2.texture = LoadTexture(camera,"./src/resources/Scarf.png");
 	scarf->sprite.frameTime = 0;
 
 }

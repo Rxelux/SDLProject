@@ -130,7 +130,7 @@ SDL_Texture* LoadText(E_camera* camera, char* path,char* text,int R,int G,int B,
         //Get rid of old loaded surface
         SDL_FreeSurface( loadedSurface );
     }
-
+    TTF_CloseFont(font);
     return newTexture;
 }
 

@@ -11,8 +11,6 @@
 #include "gameObjectsStruct.h"
 #include "../scenes/scenesStruct.h"
 
-
-
 //----PLAYER------------------------------------------------
 
 void InitPlayer(S_scene_lvl1* sc,E_camera* camera);
@@ -28,9 +26,15 @@ bool TestCollisionMap(G_player* player,P_vector* posTest,P_hitBox* hitBox,G_tile
 
 void InitTileMap(S_scene_lvl1* sc,E_camera* camera);
 void UpdateTileMap(S_scene_lvl1* sc,E_camera* camera);
-void RenderTileMap(S_scene_lvl1* sc,E_camera* camera,int j);
+void RenderTileMap(S_scene_lvl1* sc,E_input* input,E_camera* camera,int j);
 
 P_vector GetMapPos(P_vector* v,G_tileMap* tileMap);
+
+void InitTextTimer(S_scene_lvl1* sc,E_camera* camera);
+void UpdateTextTimer(S_scene_lvl1* sc,E_camera* camera);
+void RenderTextTimer(S_scene_lvl1* sc,E_camera* camera);
+
+void EndTextTimer(S_scene_lvl1* sc,E_input* input);
 
 //----MenuBG--------------------------------------------------
 
@@ -48,6 +52,10 @@ void RenderTextMenu(S_scene_menu* sc,E_camera* camera);
 void InitTextCredits(S_scene_menu* sc,E_camera* camera);
 void UpdateTextCredits(S_scene_menu* sc,E_input* input,E_camera* camera);
 void RenderTextCredits(S_scene_menu* sc,E_camera* camera);
+
+void InitTextScores(S_scene_menu* sc,E_input* input,E_camera* camera);
+void UpdateTextScores(S_scene_menu* sc,E_input* input,E_camera* camera);
+void RenderTextScores(S_scene_menu* sc,E_camera* camera);
 //----ButtonsMenu--------------------------------------------------
 
 void InitButtonsMenu(S_scene_menu* sc,E_camera* camera);
@@ -64,7 +72,7 @@ bool testKey(E_input* input,int key);
 void InitMapBG(S_scene_map* sc,E_camera* camera);
 void RenderMapBG(S_scene_map* sc,E_camera* camera);
 
-//----ButtonsMeap--------------------------------------------------
+//----ButtonsMap--------------------------------------------------
 
 void InitButtonsMap(S_scene_map* sc,E_camera* camera);
 void UpdateButtonsMap(S_scene_map* sc,E_input* input,E_camera* camera);

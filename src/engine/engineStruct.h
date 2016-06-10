@@ -30,7 +30,7 @@ typedef struct
 	int select;
 	int musicVol;
 	int soundVol;
-	int scores[10];
+	char scores[10][20];
 } E_input;
 
 //----CAMERA----------------------------------

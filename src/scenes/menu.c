@@ -7,6 +7,7 @@ int InitScene_menu(S_scene_menu* sc,E_input* input,E_camera* camera){
 	InitMenuBG(sc,camera);
 	InitTextMenu(sc,camera);
 	InitTextCredits(sc,camera);
+	InitTextScores(sc,input,camera);
 	InitButtonsMenu(sc,camera);
 	InitButtonsOption(sc,input,camera);
 	return 0;
@@ -19,10 +20,12 @@ int UpdateScene_menu(S_scene_menu* sc,E_input* input,E_camera* camera){
 	UpdateButtonsMenu(sc,input,camera);
 	UpdateButtonsOption(sc,input,camera);
 	UpdateTextCredits(sc,input,camera);
+	UpdateTextScores(sc,input,camera);
 
 	RenderMenuBG(sc,camera);
 	RenderTextMenu(sc,camera);
 	RenderTextCredits(sc,camera);
+	RenderTextScores(sc,camera);
 	RenderButtonsMenu(sc,camera);
 	RenderButtonsOption(sc,camera);
 

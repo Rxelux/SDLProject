@@ -7,9 +7,9 @@ void InitTileMap(S_scene_lvl1* sc,E_camera* camera){
 	InitT(&tileMap->transform,0,0,10,10);
 	InitT(&tileMap->sprite.srce,0,0,16,16);
 	InitT(&tileMap->sprite.dest,0,0,16,16);
-	tileMap->sprites[0] = tileMap->sprites[1] = tileMap->sprites[2] = tileMap->sprites[3] = tileMap->sprites[4] = LoadTexture(camera,"src/resources/tileJourneyA2.png");
+	tileMap->sprites[0] = tileMap->sprites[1] = tileMap->sprites[2] = tileMap->sprites[3] = tileMap->sprites[4] = LoadTexture(camera,"./src/resources/tileJourneyA2.png");
 	tileMap->sprite.frameTime = 0;
-	tileMap->sizeMapX = 1500;
+	tileMap->sizeMapX = 400;
 	tileMap->sizeMapY = 32;
 	tileMap->sizeTileSetX = 28;
 	tileMap->sizeTileSetY = 7;
@@ -20,7 +20,7 @@ void InitTileMap(S_scene_lvl1* sc,E_camera* camera){
 	InitT(&tileMap->paralax[4],0,0,1.25,1.25);
 	int i,j;
 	FILE *myFile;
-	myFile = fopen("src/resources/lvl1B.txt", "r");
+	myFile = fopen("./src/resources/lvl1B.txt", "r");
 	if (myFile == NULL){
 
 		printf("Error Reading File\n");
@@ -31,8 +31,8 @@ void InitTileMap(S_scene_lvl1* sc,E_camera* camera){
 				fscanf(myFile, "%d,",&tileMap->tileRef[j][i]);
 
 		}
-		printf("%d \n",tileMap->tileRef[j][i]);
-		printf("%d, %d ,\n",j,i);
+		//printf("%d \n",tileMap->tileRef[j][i]);
+		//printf("%d, %d ,\n",j,i);
 	}
 
 	fclose(myFile);
@@ -45,13 +45,20 @@ void InitTileMap(S_scene_lvl1* sc,E_camera* camera){
 		case 170:
 		case 171:
 		case 172:
-		case 0: InitH(&tileMap->hitBox[i],4,4,4,-4,-4,-4,-4,4,0,0,0,0,0);break;
-		case 29:
-		case 4: InitH(&tileMap->hitBox[i],8,8,8,-8,-8,8,0,0,0,0,0,0,3);break;
+		case 110:
+		case 0: InitH(&tileMap->hitBox[i],0,0,0,0,0,0,0,0,0,0,0,0,0);break;
+		case 144:
 		case 32:
+		case 4: InitH(&tileMap->hitBox[i],8,8,8,-8,-8,8,0,0,0,0,0,0,3);break;
+		case 145:
+		case 35:
 		case 7: InitH(&tileMap->hitBox[i],8,8,-8,-8,-8,8,0,0,0,0,0,0,3);break;
-		case 63:InitH(&tileMap->hitBox[i],-8,-8,8,8,8,8,0,0,0,0,0,0,3); break;
-		default: InitH(&tileMap->hitBox[i],8,8,8,-8,-8,-8,-8,8,0,0,0,0,4);break;
+		case 8: InitH(&tileMap->hitBox[i],8,0,-4,0,-4,-8,8,-8,0,0,0,0,4);break;
+		case 10: InitH(&tileMap->hitBox[i],4,0,-8,0,-8,-8,4,-8,0,0,0,0,4);break;
+		case 150:
+		case 122:
+		case 9: InitH(&tileMap->hitBox[i],8,0,-8,0,-8,-8,8,-8,0,0,0,0,4);break;
+		default: InitH(&tileMap->hitBox[i],8,8,-8,8,-8,-8,8,-8,0,0,0,0,4);break;
 		}
 	}
 }
@@ -67,7 +74,7 @@ void UpdateTileMap(S_scene_lvl1* sc,E_camera* camera){
 }
 
 
-void RenderTileMap(S_scene_lvl1* sc,E_camera* camera,int j){
+void RenderTileMap(S_scene_lvl1* sc,E_input* input,E_camera* camera,int j){
 
 	G_tileMap* tileMap = &sc->tileMap;
 	tileMap->sprite.texture = tileMap->sprites[j];
@@ -105,22 +112,24 @@ void RenderTileMap(S_scene_lvl1* sc,E_camera* camera,int j){
 				SDL_SetTextureAlphaMod(tileMap->sprite.texture,255);
 			}
 
-			RenderGameObject(camera,&tileMap->sprite);
+			if(DistanceV(&sc->player.transform.position,&tileMap->transform.position) < 2000){
+				RenderGameObject(camera,&tileMap->sprite);
+				if(j == 2 && input->key[input->select]){
+					int px = GetMapPos(&sc->player.transform.position,tileMap).x;
+					int py = GetMapPos(&sc->player.transform.position,tileMap).y;
 
-		}
-		/*
-		if(j == 2){
-			int px = GetMapPos(&sc->player.transform.position,tileMap).x;
-			int py = GetMapPos(&sc->player.transform.position,tileMap).y;
-
-			printf("%d : %d \n",px,py);
-			if(i%tileMap->sizeMapX >= px-2 && i%tileMap->sizeMapX <= px+2){
-				if(i/tileMap->sizeMapX >= py-2 && i/tileMap->sizeMapX <= py+2){
-					P_hitBox hb = HMatchPS(&tileMap->hitBox[tileMap->tileRef[j][i]],&tileMap->transform.position,&tileMap->transform.scale);
-					DEBUGHITBOX (&hb,&sc->camera,0,0,128);
+					//printf("%d : %d \n",px,py);
+					if(i%tileMap->sizeMapX >= px-2 && i%tileMap->sizeMapX <= px+2){
+						if(i/tileMap->sizeMapX >= py-2 && i/tileMap->sizeMapX <= py+2){
+							P_hitBox hb = HMatchPS(&tileMap->hitBox[tileMap->tileRef[j][i]],&tileMap->transform.position,&tileMap->transform.scale);
+							DEBUGHITBOX (&hb,camera,0,0,128);
+						}
+					}
 				}
 			}
-		}*/
+
+		}
+
 	}
 }
 

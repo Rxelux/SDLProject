@@ -19,6 +19,7 @@ typedef struct{
 	G_scarf scarf;
 	G_tileMap tileMap;
 	G_menuBG menuBG;
+	G_textTimer textTimer;
 
 }S_scene_lvl1;
 
@@ -26,6 +27,7 @@ typedef struct{
 	G_menuBG menuBG;
 	G_textMenu textMenu;
 	G_textCredits textCredits;
+	G_textScores textScores;
 	G_buttonsMenu bm;
 	G_buttonsOption bo;
 
